@@ -1,3 +1,8 @@
+provider "azurerm" {
+  version = "=2.55.0"  # Pin to a specific version to ensure consistency
+  features {}  # Ensure the features block is included
+}
+
 resource "azurerm_resource_group" "RG-Terraform" {
   name     = "terraform-resource-group"
   location = "West Europe"
@@ -32,7 +37,7 @@ resource "azurerm_app_service" "AS-Terraform" {
   connection_string {
     name  = "Database"
     type  = "SQLServer"
-    value = "Server=tcp:${azurerm_sql_server.terraform-sqlserver.fully_qualified_domain_name} Database=${azurerm_sql_database.terraform-sqldatabase.name};User ID=${azurerm_sql_server.terraform-sqlserver.administrator_login};Password=${azurerm_sql_server.terraform-sqlserver.administrator_login_password};Trusted_Connection=False;Encrypt=True;"
+    value = "Server=tcp:${azurerm_sql_server.terraform-sqlserver.fully_qualified_domain_name};Database=${azurerm_sql_database.terraform-sqldatabase.name};User ID=${azurerm_sql_server.terraform-sqlserver.administrator_login};Password=${azurerm_sql_server.terraform-sqlserver.administrator_login_password};Trusted_Connection=False;Encrypt=True;"
   }
 }
 
@@ -41,7 +46,7 @@ resource "azurerm_sql_server" "terraform-sqlserver" {
   resource_group_name          = azurerm_resource_group.RG-Terraform.name
   location                     = azurerm_resource_group.RG-Terraform.location
   version                      = "12.0"
-  administrator_login          = "houssem"
+  administrator_login          = "olympe"
   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
 }
 
